@@ -1,14 +1,19 @@
-package fundmentals;
+package saberhosneydev;
 
-import java.io.PrintStream;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.Period;
+import java.util.Scanner;
 
 public class Basics {
+    //Define a global variable
+    public static Scanner scanner = new Scanner(System.in);
+
+
     public static void printNumbers() {
         System.out.println("Enter the MAX variable for forStatement");
-        Integer max = Integer.valueOf(System.console().readLine());
+
+        Integer max = scanner.nextInt();
         for (int i = 0; i <= max; ++i) {
             System.out.println(i);
         }
@@ -25,7 +30,7 @@ public class Basics {
 
     public static void statements() {
         while (true) {
-            String input = System.console().readLine();
+            String input = scanner.next();
             if ("next".equals(input)) {
                 break;
             }
