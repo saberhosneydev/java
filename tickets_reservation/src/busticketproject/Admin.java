@@ -2,59 +2,57 @@ package busticketproject;
 
 import java.util.ArrayList;
 
-public class Admin{
+public class Admin {
+    //Instance variables
     private ArrayList<String[]> AdminAccArr = new ArrayList<>();
-    private String[] AdminAccPolyfill = new String[4];
-    public Admin() {
+    private String[] AdminAccPolyfill = new String[2];
 
+    public Admin() {
     }
 
-    public void addAccount(String AdminUsrName, String AdminPass) {
-        AdminAccPolyfill[0] = AdminUsrName;
-        AdminAccPolyfill[1] = AdminPass;
+    //Add Account
+    public void AddAccount(String Username, String Password) {
+        AdminAccPolyfill[0] = Username;
+        AdminAccPolyfill[1] = Password;
         AdminAccArr.add(AdminAccPolyfill);
         System.out.println("Account created!");
     }
 
-    public boolean AdminAccountCheck(String AdminUsrName, String AdminPass) {
-
+    //Admin Login
+    public boolean AdminLogin(String Username, String Password) {
         for (String[] strings : AdminAccArr) {
-
-            if (AdminUsrName.equals(strings[0])) {
-                if (AdminPass.equals(strings[1])) {
+            if (Username.equals(strings[0])) {
+                if (Password.equals(strings[1])) {
                     return true;
                 } else System.out.print("Wrong Password");
             } else System.out.print("Wrong User Name");
-
         }
         return false;
     }
 
-
-    public void changePassword(String username, String password, String newPassword){
+    //Change Username
+    public void ChangeUsername(String Username, String Password, String NewUsername) {
         for (String[] strings : AdminAccArr) {
-
-            if (username.equals(strings[0])) {
-                if (password.equals(strings[1])) {
-                    strings[1] = newPassword;
-                    System.out.println("Password Changed");
-                    break;
-                } else System.out.print("Wrong Password");
-            } else System.out.print("Wrong UserName");
-
-        }
-    }
-    public void changeUsername(String username, String password, String newUsername){
-        for (String[] strings : AdminAccArr) {
-
-            if (username.equals(strings[0])) {
-                if (password.equals(strings[1])) {
-                    strings[0] = newUsername;
+            if (Username.equals(strings[0])) {
+                if (Password.equals(strings[1])) {
+                    strings[0] = NewUsername;
                     System.out.println("Username Changed");
                     break;
                 } else System.out.print("Wrong Password");
             } else System.out.print("Wrong UserName");
+        }
+    }
 
+    //Change Password
+    public void ChangePassword(String Username, String Password, String NewPassword) {
+        for (String[] strings : AdminAccArr) {
+            if (Username.equals(strings[0])) {
+                if (Password.equals(strings[1])) {
+                    strings[1] = NewPassword;
+                    System.out.println("Password Changed");
+                    break;
+                } else System.out.print("Wrong Password");
+            } else System.out.print("Wrong UserName");
         }
     }
 }

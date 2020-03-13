@@ -1,25 +1,78 @@
 package busticketproject;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Bus {
-    private String route,runningTimes, distance,fare;
-    private Integer id = 0;
-    private ArrayList<String[]> BusList;
-    private String[] BusStrings = new String[4];
+    //Instance variables
+    private final Integer FarePerKM = 2;
+    private final int NumberOfSeatsPerBus = 45;
+    private ArrayList<String[]> BusList = new ArrayList<>();
+    private String[] BusDetails = new String[100];
+    private Integer ID = 0;
+    private Double Fare = (double) 0;
+
     public Bus() {
-        BusList = new ArrayList<>();
     }
-    
-    public void create(String route, String runningTimes, String distance, String fare){
-        BusStrings[0] = route;
-        BusStrings[1] = runningTimes;
-        BusStrings[2] = id.toString();
-        BusStrings[3] = distance;
-        BusStrings[4] = fare;
-        BusList.add(BusStrings);
-        System.out.println("Created id: " + id++);
+
+    //Create New Bus
+    public void CreateBus(String Origin, String Destination, double Distance) {
+        Fare = FarePerKM * Distance;
+        BusDetails[0] = ID.toString();
+        BusDetails[1] = Origin;
+        BusDetails[2] = Destination;
+        BusDetails[3] = String.valueOf(Distance);
+        BusDetails[4] = String.valueOf(Fare);
+        BusDetails[5] = String.valueOf(NumberOfSeatsPerBus);
+
+        //Enter Schedule Length
+        System.out.println("Enter Bus" + ID + "Schedule Length");
+        int ScheduleLength = new Scanner(System.in).nextInt();
+        BusDetails[6] = String.valueOf(ScheduleLength);
+
+        //Enter Schedule Details
+        for (int i = 1; i <= ScheduleLength; i++) {
+            System.out.println("Enter Time " + i + " Details" + "\nNote: Enter Time in HH:MM 24hrs Format ");
+            String ScheduleDetails = new Scanner(System.in).next();
+            BusDetails[i + 6] = ScheduleDetails;
+        }
+
+        BusList.add(BusDetails);
+        System.out.println("Created New Bus, ID :" + ID++);
     }
-    
-    
+
+    //Get Bus Data
+    public String[] GetBusDetails(String ID) {
+        String[] x = new String[100];
+        for (String[] Details : BusList) {
+            if (Details[0].equals(ID)) {
+                x = Details;
+            }
+        }
+        return x;
+    }
+
+    //Update Bus Data
+    public void UpdateBusDetails(String ID, String Origin, String Destination, double Distance) {
+        String[] Details = GetBusDetails(ID);
+        Details[1] = Origin;
+        Details[2] = Destination;
+        Details[3] = String.valueOf(Distance);
+    }
+
+    //Remove Bus
+    public void RemoveBus(String ID) {
+        try {
+            BusList.remove(Integer.parseInt(ID));
+        } catch (Exception ex) {
+            System.out.print(ex);
+        }
+    }
+    public void search(String Origin, String Destination){
+        for (String[] Bus: BusList) {
+            if (Origin.equals(Bus[1]) && Destination.equals(Bus[2])) {
+                System.out.print("FOUND");
+            }
+        }
+    }
 }
