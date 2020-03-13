@@ -32,42 +32,6 @@ class Admin {
         new MySQL().update(query);
     }
 }
-
-class Bus {
-    private String origin;
-    private String destination;
-    private Integer distance;
-    private String runningTimes;
-    private Integer fare;
-    private int totalBuses = 0;
-
-    public Bus() {
-
-    }
-
-    public void createBus(String origin, String destination, Integer distance, String runningTimes, Integer fare) {
-        this.destination = destination;
-        this.origin = origin;
-        this.distance = distance;
-        this.runningTimes = runningTimes;
-        this.fare = fare;
-        totalBuses++;
-        System.out.println("Bus created");
-    }
-
-    public Integer getTotalBuses() {
-        return totalBuses;
-    }
-}
-
-class Passenger {
-
-}
-
-class Ticket {
-
-}
-
 public class Main {
     public static void main(String[] args) {
 
