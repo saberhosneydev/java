@@ -7,7 +7,7 @@ public class Passenger {
     private int ID = 0;
     private ArrayList<String[]> PassengerAccArr = new ArrayList<>();
     private String[] PassengerAccPolyFill = new String[3];
-
+    private String UserID;
     Passenger() {
 
     }
@@ -25,6 +25,7 @@ public class Passenger {
             if (username.equals(strings[1])) {
                 if (password.equals(strings[2])) {
                     System.out.println("Logged IN!");
+                    UserID=strings[0];
                     return true;
                 } else System.out.println("Wrong Password");
             } else System.out.println("Wrong Username");
@@ -57,4 +58,7 @@ public class Passenger {
         }
     }
 
+    public String getUserID() {
+        return UserID;
+    }
 }

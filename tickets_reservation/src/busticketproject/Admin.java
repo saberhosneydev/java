@@ -6,12 +6,14 @@ public class Admin {
     //Instance variables
     private ArrayList<String[]> AdminAccArr = new ArrayList<>();
     private String[] AdminAccPolyfill = new String[2];
+    private boolean LoginStateVar = false;
+    private boolean CheckTrue = false;
 
     public Admin() {
     }
 
     //Add Account
-    public void AddAccount(String Username, String Password) {
+    public void create(String Username, String Password) {
         AdminAccPolyfill[0] = Username;
         AdminAccPolyfill[1] = Password;
         AdminAccArr.add(AdminAccPolyfill);
@@ -19,40 +21,57 @@ public class Admin {
     }
 
     //Admin Login
-    public boolean AdminLogin(String Username, String Password) {
+    public boolean login(String Username, String Password) {
         for (String[] strings : AdminAccArr) {
             if (Username.equals(strings[0])) {
                 if (Password.equals(strings[1])) {
+                    LoginStateVar = true;
                     return true;
                 } else System.out.print("Wrong Password");
-            } else System.out.print("Wrong User Name");
+            } else System.out.print("Wrong Username");
         }
         return false;
     }
 
-    //Change Username
-    public void ChangeUsername(String Username, String Password, String NewUsername) {
+    public String[] getAdminDetails(String Username, String Password) {
+        String[] x = new String[100];
         for (String[] strings : AdminAccArr) {
             if (Username.equals(strings[0])) {
                 if (Password.equals(strings[1])) {
-                    strings[0] = NewUsername;
-                    System.out.println("Username Changed");
+                    x = strings;
+                    CheckTrue = true;
                     break;
-                } else System.out.print("Wrong Password");
-            } else System.out.print("Wrong UserName");
+                } else System.out.print("Wrong Password\n");
+            } else System.out.print("Wrong Username\n");
+        }
+        return x;
+    }
+
+    //Change Username
+    public void changeUsername(String Username, String Password, String NewUsername) {
+        String[] Details = getAdminDetails(Username, Password);
+        if (CheckTrue) {
+            Details[0] = NewUsername;
+            System.out.println("Username changed Successfully \n");
+            CheckTrue = false;
         }
     }
 
     //Change Password
-    public void ChangePassword(String Username, String Password, String NewPassword) {
-        for (String[] strings : AdminAccArr) {
-            if (Username.equals(strings[0])) {
-                if (Password.equals(strings[1])) {
-                    strings[1] = NewPassword;
-                    System.out.println("Password Changed");
-                    break;
-                } else System.out.print("Wrong Password");
-            } else System.out.print("Wrong UserName");
+    public void changePassword(String Username, String Password, String NewPassword) {
+        String[] Details = getAdminDetails(Username, Password);
+        if (CheckTrue) {
+            Details[1] = NewPassword;
+            System.out.println("Username changed Successfully \n");
+            CheckTrue = false;
+        }
+    }
+
+    public boolean loginState() throws Exception {
+        if (LoginStateVar) {
+            return true;
+        } else {
+            throw new Exception("Insufficient permissions!");
         }
     }
 }
