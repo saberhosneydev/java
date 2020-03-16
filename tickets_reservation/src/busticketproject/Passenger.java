@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 public class Passenger {
     //Instance variables
-    private int ID = 0;
+    private Integer ID = 0;
     private ArrayList<String[]> PassengerAccArr = new ArrayList<>();
     private String[] PassengerAccPolyFill = new String[3];
-    private String UserID;
+    private Integer UserID;
     Passenger() {
 
     }
@@ -17,6 +17,7 @@ public class Passenger {
         PassengerAccPolyFill[0] = String.valueOf(ID++);
         PassengerAccPolyFill[1] = UsrName;
         PassengerAccPolyFill[2] = Pass;
+        PassengerAccArr.add(PassengerAccPolyFill);
     }
 
     //Passenger Login
@@ -25,7 +26,7 @@ public class Passenger {
             if (username.equals(strings[1])) {
                 if (password.equals(strings[2])) {
                     System.out.println("Logged IN!");
-                    UserID=strings[0];
+                    UserID=Integer.parseInt(strings[0]);
                     return true;
                 } else System.out.println("Wrong Password");
             } else System.out.println("Wrong Username");
@@ -58,7 +59,7 @@ public class Passenger {
         }
     }
 
-    public String getUserID() {
+    public Integer getUserID() {
         return UserID;
     }
 }

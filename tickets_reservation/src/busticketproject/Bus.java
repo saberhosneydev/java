@@ -10,13 +10,13 @@ public class Bus {
     private Integer ID = 0;
     private int ScheduleLength;
     private ArrayList<String[]> Queue = new ArrayList<>();
-    private String[] tripDetails = new String[7];
+
     public Bus() {
     }
 
     //Create New Bus
     public void CreateBus(String Origin, String Destination, double Distance) {
-        //Instance variables
+        System.out.println("Create New Bus: \n---------------");
         int farePerKM = 2;
         Double fare = farePerKM * Distance;
         BusDetails = new String[100];
@@ -28,7 +28,7 @@ public class Bus {
         BusDetails[5] = String.valueOf(30);
 
         //Enter Schedule Length
-        System.out.println("Enter Bus ( " + (ID + 1) + " ) Schedule Length");
+        System.out.println("Enter Bus ( " + (ID + 1) + " ) Timetable Length");
         ScheduleLength = new Scanner(System.in).nextInt();
         BusDetails[6] = String.valueOf(ScheduleLength);
 
@@ -40,30 +40,33 @@ public class Bus {
         }
 
         BusList.add(BusDetails);
-        System.out.println("Created New Bus, ID :" + ID++);
+        System.out.println("Created New Bus, it's ID is (" + ID++ + ")\n---------------------------------\n\n");
     }
 
     //Update Bus Data
     public void UpdateBus(String ID, String Origin, String Destination, double Distance) {
         String[] Details = GetBusDetails(ID);
+        System.out.println("Edit Bus Number " + ( Integer.valueOf(Details[0]) + 1) + "\n");
         Details[1] = Origin;
         Details[2] = Destination;
         Details[3] = String.valueOf(Distance);
+        int y=1;
         //Edit Schedule Details
-        for (int i = 1; i <= ScheduleLength; i++) {
-            System.out.println("Edit Time " + i + " Details" + "\nNote: Enter Time in HH:MM 24hrs Format ");
+        for (int i = 7; i <= 6+Integer.valueOf(Details[6]); i++) {
+            System.out.println("Edit Time " + y++ + " Details" + "\nNote: Enter Time in HH:MM 24hrs Format ");
             String ScheduleDetails = new Scanner(System.in).next();
-            BusDetails[i + 6] = ScheduleDetails;
+            Details[i] = ScheduleDetails;
         }
+        Integer x=BusList.indexOf(GetBusDetails(ID));
+        BusList.set(x, Details);
     }
 
     //Remove Bus
     public void RemoveBus(String ID) {
         try {
-            BusList.remove(Integer.parseInt(ID));
-            System.out.print("Bus Removed");
-        } catch (Exception ignored) {
-
+            BusList.remove(GetBusDetails(ID));
+            System.out.print("Bus Removed\n");
+        } catch (Exception e) {
         }
     }
 
@@ -87,24 +90,60 @@ public class Bus {
                 BusesFound.add(Bus);
             }
         }
-        return BusesFound.get(0) != null;
+        if(BusesFound.isEmpty()){
+            return  false;
+        }else {
+            return true;
+        }
     }
 
     public ArrayList<String[]> getBusesFound() {
         return BusesFound;
     }
 
-    public boolean selectSeat(Integer TicketID, Integer PassengerID, Integer BusID,String Date, String Time, Integer SeatNumber){
-        if (tripDetails[0].equals(BusID) && tripDetails[4].equals(Date) && tripDetails[5].equals(Time) && tripDetails[6].equals(SeatNumber)){
-                return false;
-        }else {
-            tripDetails[0] = String.valueOf(TicketID);
-            tripDetails[1] = String.valueOf(PassengerID);
-            tripDetails[2] = String.valueOf(BusID);
-            tripDetails[3] = Date;
-            tripDetails[4] = Time;
-            tripDetails[5] = String.valueOf(SeatNumber);
+    public boolean selectSeat(Integer TicketID, Integer PassengerID, Integer BusID, String Date, String Time, Integer SeatNumber) {
+        String[] newtripDetails = new String[7];
+        if(Queue.isEmpty()){
+            newtripDetails[0] = String.valueOf(TicketID);
+            newtripDetails[1] = String.valueOf(PassengerID);
+            newtripDetails[2] = String.valueOf(BusID);
+            newtripDetails[3] = Date;
+            newtripDetails[4] = Time;
+            newtripDetails[5] = String.valueOf(SeatNumber);
+            Queue.add(newtripDetails);
             return true;
+        }else {
+            for (String[] trip:Queue) {
+                if (!trip[2].equals(String.valueOf(BusID)) || !trip[3].equals(Date) || !trip[4].equals(Time) || !trip[5].equals(String.valueOf(SeatNumber))) {
+                    newtripDetails[0] = String.valueOf(TicketID);
+                    newtripDetails[1] = String.valueOf(PassengerID);
+                    newtripDetails[2] = String.valueOf(BusID);
+                    newtripDetails[3] = Date;
+                    newtripDetails[4] = Time;
+                    newtripDetails[5] = String.valueOf(SeatNumber);
+                    Queue.add(newtripDetails);
+                    return true;
+                }
+            }
         }
+        return false;
     }
+
+    public boolean checkSeatIfAvailable(Integer BusID, String Date, String Time, Integer SeatNumber) {
+        if (Queue.isEmpty()){
+            return true;
+        }else {
+            for (String[] trip:Queue) {
+                return  !trip[2].equals(String.valueOf(BusID)) || !trip[3].equals(Date) || !trip[4].equals(Time) || !trip[5].equals(String.valueOf(SeatNumber));
+            }
+        }
+        return false;
+    }
+
+    public ArrayList<String[]> getQueue() {
+        return Queue;
+    }
+
 }
+
+

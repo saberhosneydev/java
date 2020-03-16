@@ -74,4 +74,17 @@ public class Admin {
             throw new Exception("Insufficient permissions!");
         }
     }
+    public void summary(Bus bus, String busID, String date, String time){
+        String[] bus1 = bus.GetBusDetails(busID);
+        ArrayList<String[]>  queue = bus.getQueue();
+        int i = 0;
+        for (String[] trip: queue) {
+            if(trip[2].equals(busID) && trip[3].equals(date) && trip[4].equals(time)){
+                i++;
+            }
+        }
+        System.out.println("\n--------------------------\n");
+        System.out.println("Summary of the trip\n   Seats booked : " + i);
+        System.out.println("    Total fare is " + (i * Double.parseDouble(bus1[4])));
+    }
 }
