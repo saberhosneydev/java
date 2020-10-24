@@ -29,3 +29,6 @@ hs_err_pid*
 
 # End of https://www.gitignore.io/api/java
 /java_learning/gui/nbproject/private/
+/java_learning/Encryptions/nbproject/private/
+/java_learning/Encryptions/build/
+/java_learning/Encryptions/dist/
