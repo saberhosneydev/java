@@ -1,9 +1,6 @@
 import java.io.*;
 import java.util.ArrayList;
 
-//Yes I name it database, because it's the the rigth name, I no longer gives a fuck what you think.
-//therefore put your opinion in your own ass, thank you,
-// best regards Saber.
 public class Database {
 
     public static void main(String[] args) {
